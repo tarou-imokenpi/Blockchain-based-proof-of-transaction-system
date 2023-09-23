@@ -14,7 +14,7 @@ for i in range(1, 10):
     block_chain_list.add_block(transaction_data)
 
 
-# 購入の確認
+# チェーンの確認
 for i in range(1, len(block_chain_list.block_chain)):
     print(f"---------------block{i}---------------------")
     print(f"previous_hash: {block_chain_list.block_chain[i].previous_hash}")

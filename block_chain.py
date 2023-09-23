@@ -15,6 +15,7 @@ class BlockChain:
             transaction_data={"message": "Genesis Block"},
         )
         self.block_chain.append(block)
+        logger.debug("create genesis block")
 
     def add_block(self, transaction_data: dict) -> list:
         try:
@@ -24,6 +25,7 @@ class BlockChain:
                 transaction_data=transaction_data,
             )
             self.block_chain.append(block)
+            
             return self.block_chain
         except IndexError:
             logger.error("previous_hashのindexの値が見つかりません")
