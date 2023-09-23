@@ -22,24 +22,27 @@ class Block:
         block_hash: str = ""
         nonce: int = 0
         timestamp: float = self.timestamp
-        hash: str = self.previous_hash
+        previous_hash: str = self.previous_hash
         transaction_data = self.transaction_data
 
         logger.debug("start Mining")
         while True:
             block_data = {
+                "previous_hash": previous_hash,
                 "transaction_data": transaction_data,
-                "previous_hash": hash,
                 "timestamp": timestamp,
                 "nonce": nonce,
             }
+            # ブロックのハッシュを求める
             block_hash: str = sha256(str(block_data).encode()).hexdigest()
-            nonce += 1
-            if nonce % 100000 == 0:
-                logger.debug(f"Mining: {nonce}...")
 
             if block_hash[0 : self.diff] == "0" * self.diff:
                 logger.debug(
                     f"finish Mining\nprevious_hash: {self.previous_hash}\nnonce: {nonce}\nhash: {block_hash}\ntimestamp: {self.timestamp}"
                 )
                 return block_hash
+            else:
+                nonce += 1
+
+            if nonce % 100000 == 0:
+                logger.debug(f"Mining: {nonce}...")

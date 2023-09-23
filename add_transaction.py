@@ -42,7 +42,7 @@ async def root():
 @app.post("/add_block/")
 async def add_block(transaction_data: Transaction):
     block_chain_list.add_block(transaction_data)
-    return "200 OK"
+    return "OK"
 
 
 if __name__ == "__main__":
