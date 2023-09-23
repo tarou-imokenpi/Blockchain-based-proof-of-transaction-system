@@ -4,31 +4,30 @@
 
 ## ブロックチェーンの雰囲気実装です。
 
-# クラス図
+# sequenceDiagram
+
 
 ```mermaid
-classDiagram
-    class Block {
-        diff: int
-        previous_hash: str
-        transaction_data: dict
-        timestamp: float
-        hash: str
-        __calculate_hash()
-    }
+sequenceDiagram
+    participant Main.py
+    participant BlockChain class
+    participant Block class
+    participant sha256 lib
 
-    class BlockChain {
-        block_chain: list
-        diff: int
-        __create_genesis_block()
-        add_block(transaction_data: dict)
-    }
+    Main.py->>BlockChain class: Create BlockChain class with difficulty level 5
+    Main.py->>BlockChain class: Add a new block with transaction data
 
-    Block --> BlockChain : 1..*
-    Block --> sha256 : uses
-    BlockChain --> Block : contains
-    BlockChain --> loguru : uses
-    Block --> time : uses
-}
+    BlockChain class->>Block class: Create Genesis Block
+    Block class->>sha256 lib: Calculate Hash
+    sha256 lib-->>Block class: Hash Calculation Result
+    Block class-->>BlockChain class: Add Genesis Block
+
+    BlockChain class->>Block class: Create New Block
+    Block class->>sha256 lib: Calculate Hash
+    sha256 lib-->>Block class: Hash Calculation Result
+    Block class-->>BlockChain class: Add New Block
+
+    Note over Main.py,Block class: Transaction Data
+    Main.py-->>BlockChain class: Return Updated BlockChain class
 
 ```
