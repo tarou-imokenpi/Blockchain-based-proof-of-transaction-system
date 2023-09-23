@@ -16,26 +16,30 @@ class Block:
         self.previous_hash: str = str(previous_hash)
         self.transaction_data: dict = transaction_data
         self.timestamp: float = time.time()
-        self.hash: str = self.calculate_hash()
+        self.hash: str = self.__calculate_hash()
 
-    def calculate_hash(self) -> str:
-        nonce: int = 0
+    def __calculate_hash(self) -> str:
         block_hash: str = ""
-        logger.debug("マイニング開始")
+        nonce: int = 0
+        timestamp: float = self.timestamp
+        hash: str = self.previous_hash
+        transaction_data = self.transaction_data
+
+        logger.debug("start Mining")
         while True:
             block_data = {
-                "transaction_data": self.transaction_data,
-                "previous_hash": self.previous_hash,
-                "timestamp": self.timestamp,
+                "transaction_data": transaction_data,
+                "previous_hash": hash,
+                "timestamp": timestamp,
                 "nonce": nonce,
             }
             block_hash: str = sha256(str(block_data).encode()).hexdigest()
             nonce += 1
-            if nonce % 10000 == 0:
-                logger.debug(f"seaching: {nonce}...")
+            if nonce % 100000 == 0:
+                logger.debug(f"Mining: {nonce}...")
 
             if block_hash[0 : self.diff] == "0" * self.diff:
                 logger.debug(
-                    f"マイニング完了！！\nprevious_hash: {self.previous_hash}\nnonce: {nonce}\nhash: {block_hash}\ntimestamp: {self.timestamp}"
+                    f"finish Mining\nprevious_hash: {self.previous_hash}\nnonce: {nonce}\nhash: {block_hash}\ntimestamp: {self.timestamp}"
                 )
                 return block_hash

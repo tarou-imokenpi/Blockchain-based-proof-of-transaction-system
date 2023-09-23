@@ -1,21 +1,23 @@
 from block_chain import BlockChain
 
-diff = 4
+diff = 5
 block_chain_list = BlockChain(diff)
 
 
-data = {
-    "apple": 100,
-    "banana": 200,
-}
+for i in range(1, 10):
+    transaction_data = {
+        "apple": 100,
+        "banana": 200,
+        "num": i,
+    }
 
-block_chain_list.add_block(data)
+    block_chain_list.add_block(transaction_data)
 
 
 # 購入の確認
-for i in range(len(block_chain_list.block_chain)):
-    print("-------------------------------------")
-    print(block_chain_list.block_chain[i].previous_hash)
-    print(block_chain_list.block_chain[i].hash)
-    print(block_chain_list.block_chain[i].transaction_data)
-    print("-------------------------------------")
+for i in range(1, len(block_chain_list.block_chain)):
+    print(f"---------------block{i}---------------------")
+    print(f"previous_hash: {block_chain_list.block_chain[i].previous_hash}")
+    print(f"hash: {block_chain_list.block_chain[i].hash}")
+    print(f"transaction_data: {block_chain_list.block_chain[i].transaction_data}")
+    print("---------------------------------------------")
