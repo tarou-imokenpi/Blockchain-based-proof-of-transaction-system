@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
-from BlockChain import BlockChain
+from blockchain_core.BlockChain import BlockChain
 
 diff = 4
 block_chain = BlockChain(diff)

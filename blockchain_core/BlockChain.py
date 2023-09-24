@@ -1,4 +1,4 @@
-from block import Block
+from blockchain_core.block import Block
 from loguru import logger
 
 

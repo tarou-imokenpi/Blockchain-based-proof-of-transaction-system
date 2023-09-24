@@ -1,4 +1,4 @@
-from BlockChain import BlockChain
+from blockchain_core.BlockChain import BlockChain
 
 diff = 5
 block_chain_list = BlockChain(diff)
