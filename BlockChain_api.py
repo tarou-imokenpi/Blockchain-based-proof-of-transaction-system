@@ -46,4 +46,4 @@ async def add_block(transaction_data: Transaction):
 
 
 if __name__ == "__main__":
-    uvicorn.run("add_transaction:app", port=8000, log_level="info")
+    uvicorn.run("BlockChain_api:app", port=8000, log_level="info")
