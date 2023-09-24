@@ -1,5 +1,6 @@
 from blockchain_core.block import Block
 from loguru import logger
+from queue import Queue, Empty
 
 
 class BlockChain:
@@ -15,6 +16,7 @@ class BlockChain:
         self.diff: int = diff
         self.__create_genesis_block()
         self.update_info()
+        self.q = Queue()
 
     def __create_genesis_block(self) -> None:
         """genesis blockを作成します"""
@@ -83,3 +85,20 @@ class BlockChain:
         except IndexError:
             logger.error("previous_hashのindexの値が見つかりません")
             return {"message": "request error"}
+
+    def add_transaction_data(self, transaction_data: dict) -> dict:
+        self.q.put(transaction_data)
+        return {"mesaage": "Successfully added transaction"}
+
+    def get_transaction(self) -> dict:
+        transactions: list = []
+        try:
+            for _ in range(10):
+                transactions.append(self.q.get_nowait())
+                logger.debug(transactions)
+            return {"transactions": transactions}
+        except Empty:
+            return {"mesaage": "Not enough transactions to create a block."}
+
+    def outstanding_transaction(self) -> dict:
+        return {"outstanding_transaction": self.q.qsize()}
